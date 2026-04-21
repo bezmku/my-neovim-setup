@@ -1,0 +1,5 @@
+.netrwhist
+undo/
+*.swp
+.lsp_logs
+lazy-lock.json
