@@ -5,7 +5,7 @@ return {
         config = function()
             require("code_runner").setup({
                 filetype = {
-                    java = "cd $dir && javac $fileName && java $fileNameWithoutExt",
+                    java = "root=$(git rev-parse --show-toplevel 2>/dev/null || pwd) && cd $root && javac -d . $(find src -name '*.java') && java $(echo $file | sed \"s|$root/src/||\" | sed \"s|\\.java$||\" | tr '/' '.')",
                     python = "python3 $file",
                     cpp = "cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
                     javascript = "node $file",
