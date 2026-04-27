@@ -5,9 +5,15 @@ return {
     config = function()
         local telescope = require('telescope')
         local builtin = require('telescope.builtin')
+        local actions = require('telescope.actions')
 
         telescope.setup({
             defaults = {
+                mappings = {
+                    n = {
+                        ["q"] = actions.close
+                    }
+                },
                 -- THE FIX: This stops Telescope from trying to 'color' the preview
                 -- which is what causes the 'ft_to_lang' crash in Nvim 0.12.0
                 preview = {

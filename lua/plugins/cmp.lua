@@ -6,13 +6,14 @@ return {
         "hrsh7th/cmp-path",
         "L3MON4D3/LuaSnip",
         "saadparwaiz1/cmp_luasnip",
-        "rafamadriz/friendly-snippets",  -- NEW: Adds snippets
+        "rafamadriz/friendly-snippets",
+        "onsails/lspkind.nvim", -- NEW: Icons for autocomplete
     },
     config = function()
         local cmp = require("cmp")
         local luasnip = require("luasnip")
+        local lspkind = require("lspkind")
 
-        -- Load friendly snippets
         require("luasnip.loaders.from_vscode").lazy_load()
 
         cmp.setup({
@@ -20,6 +21,11 @@ return {
                 expand = function(args)
                     luasnip.lsp_expand(args.body)
                 end,
+            },
+            -- Added borders for a more premium feel
+            window = {
+                completion = cmp.config.window.bordered(),
+                documentation = cmp.config.window.bordered(),
             },
             mapping = cmp.mapping.preset.insert({
                 ["<C-b>"] = cmp.mapping.scroll_docs(-4),
@@ -37,9 +43,16 @@ return {
                     end
                 end, { "i", "s" }),
             }),
+            formatting = {
+                format = lspkind.cmp_format({
+                    mode = "symbol_text",
+                    maxwidth = 50,
+                    ellipsis_char = "...",
+                })
+            },
             sources = cmp.config.sources({
                 { name = "nvim_lsp" },
-                { name = "luasnip" },  -- Snippets now appear in completion
+                { name = "luasnip" },
                 { name = "buffer" },
                 { name = "path" },
             }),

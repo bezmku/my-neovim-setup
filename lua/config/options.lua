@@ -11,4 +11,5 @@ vim.opt.smartindent = true
 
 vim.opt.clipboard = "unnamedplus"
 
-
+-- Ask for confirmation instead of erroring when quitting with unsaved changes
+vim.opt.confirm = true

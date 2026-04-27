@@ -1,9 +1,10 @@
 return {
     'nvim-treesitter/nvim-treesitter',
+    branch = "master",
     build = ":TSUpdate",
     config = function()
-	local config = require("nvim-treesitter.config")
-	config.setup({
+	local configs = require("nvim-treesitter.configs")
+	configs.setup({
 	    highlight = {
 		enable = true,
 	    },
@@ -19,7 +20,7 @@ return {
 		"c",
 		"html",
 		"css",
-		"vimcode",
+		"vimdoc",
 		"sql",
 
 	    },

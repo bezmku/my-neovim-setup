@@ -3,11 +3,11 @@ return {
   config = function()
     require("supermaven-nvim").setup({
       keymaps = {
-        accept_suggestion = "<Tab>",
+        accept_suggestion = "<M-CR>", -- Alt + Enter to accept AI suggestions
         clear_suggestion = "<C-]>",
         accept_word = "<C-j>",
       },
-      ignore_filetypes = { "cpp" }, -- You can customize this
+      ignore_filetypes = { "cpp" },
       color = {
         suggestion_color = "#ffffff",
         cterm = 244,

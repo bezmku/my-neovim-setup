@@ -99,7 +99,8 @@ return {
 
         -- 5. Enable all defined LSP servers
         for name, _ in pairs(vim.lsp.config._configs) do
-            if name ~= "*" then
+            -- Skip jdtls because it is handled specifically in java.lua
+            if name ~= "*" and name ~= "jdtls" then
                 vim.lsp.enable(name)
             end
         end
