@@ -50,14 +50,15 @@ return {
                 local project_root = find_project_root()
 
                 if project_root and project_root ~= "" then
+                    -- Detect source layout BEFORE building config so all blocks can use it
+                    local has_src = vim.fn.isdirectory(project_root .. "/src") == 1
+
                     -- AUTO-INITIALIZE PROJECT METADATA
                     local dot_project = project_root .. "/.project"
                     local dot_classpath = project_root .. "/.classpath"
                     
                     if vim.fn.filereadable(dot_project) == 0 and vim.fn.isdirectory(project_root) == 1 then
                         local project_name = vim.fn.fnamemodify(project_root, ":p:h:t")
-                        -- Check if 'src' exists inside the detected root
-                        local has_src = vim.fn.isdirectory(project_root .. "/src") == 1
                         local src_path = has_src and "src" or ""
                         
                         -- Generate .project
@@ -93,6 +94,12 @@ return {
                             java = {
                                 signatureHelp = { enabled = true },
                                 contentProvider = { preferred = 'fernflower' },
+                                -- Tell jdtls WHERE source files live so that "move to package"
+                                -- code actions (F4) place files under src/ instead of the
+                                -- project root, preventing stray com/ directories.
+                                project = {
+                                    sourcePaths = has_src and { "src" } or { "." },
+                                },
                                 completion = {
                                     favoriteStaticMembers = {
                                         "org.junit.Assert.*",
