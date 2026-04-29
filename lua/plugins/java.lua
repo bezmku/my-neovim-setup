@@ -9,6 +9,16 @@ return {
             pattern = "java",
             callback = function()
                 local jdtls = require("jdtls")
+                
+                -- FORCE jdtls to use vim.ui.select (Telescope) for its menus
+                -- This makes the "Choose type to import" menu navigable.
+                require('jdtls.ui').pick_one_async = function(items, prompt, label_fn, cb)
+                    vim.ui.select(items, {
+                        prompt = prompt,
+                        format_item = label_fn,
+                    }, cb)
+                end
+
                 local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
                 -- Multi-layered root detection
@@ -126,7 +136,7 @@ return {
                 end
 
                 local opts = { buffer = true, silent = true }
-                vim.keymap.set("n", "<leader>oi", jdtls.organize_imports, { desc = "Organize Imports", unpack(opts) })
+                vim.keymap.set("n", "<leader>oi", require('jdtls').organize_imports, { desc = "Organize Imports", buffer = true })
                 vim.keymap.set("n", "<leader>ev", jdtls.extract_variable, { desc = "Extract Variable", unpack(opts) })
                 vim.keymap.set("n", "<leader>ec", jdtls.extract_constant, { desc = "Extract Constant", unpack(opts) })
             end,

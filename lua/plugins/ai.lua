@@ -11,18 +11,31 @@ return {
     require("codecompanion").setup({
       strategies = {
         chat = {
-          adapter = "groq",
+          adapter = "ollama",
         },
         inline = {
-          adapter = "groq",
+          adapter = "ollama",
+        },
+        agent = {
+          adapter = "ollama",
         },
       },
       adapters = {
-        -- We define the adapter here to ensure Neovim "finds" it
+        ollama = function()
+          return require("codecompanion.adapters").extend("ollama", {
+            schema = {
+              model = {
+                default = "qwen2.5-coder:7b",
+              },
+              num_ctx = {
+                default = 16384,
+              },
+            },
+          })
+        end,
         groq = function()
           return require("codecompanion.adapters").extend("groq", {
             env = {
-              -- USE YOUR GROQ KEY HERE
               api_key = "GROQ_KEY", 
             },
             schema = {
@@ -38,5 +51,6 @@ return {
     -- Keybinds
     vim.keymap.set({ "n", "v" }, "<leader>ac", "<cmd>CodeCompanionChat Toggle<cr>", { desc = "AI Chat" })
     vim.keymap.set({ "n", "v" }, "<leader>aa", "<cmd>CodeCompanionActions<cr>", { desc = "AI Actions" })
+    vim.keymap.set("v", "ga", "<cmd>CodeCompanionChat Add<cr>", { desc = "Add to AI Chat" })
   end,
 }
