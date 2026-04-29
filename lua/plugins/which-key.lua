@@ -25,6 +25,7 @@ return {
             { "<leader>b",  group = "buffer"             },
             { "<leader>e",  group = "explorer / extract" },
             { "<leader>l",  group = "live-server / lsp"  },
+            { "<leader>p",  group = "python"             },
             { "<leader>t",  group = "theme"              },
         })
     end,

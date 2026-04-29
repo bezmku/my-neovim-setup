@@ -7,7 +7,6 @@ return {
             javascriptreact = { "eslint" },
             typescript = { "eslint" },
             typescriptreact = { "eslint" },
-            python = { "pylint" },
             css = { "stylelint" },
             html = { "htmlhint" },
         }
