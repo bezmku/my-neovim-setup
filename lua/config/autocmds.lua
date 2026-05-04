@@ -26,14 +26,20 @@ vim.api.nvim_create_autocmd({"BufNewFile", "BufReadPost"}, {
     local lines = {}
     
     -- 1. Generate Package Declaration
-    local src_start, src_end = filepath:find("/src/")
-    if src_end then
-      local package_path = filepath:sub(src_end + 1)
-      local package_name = package_path:gsub("/", ".")
-      if package_name ~= "" then
+    local package_path = ""
+    local patterns = {"/src/main/java/", "/src/test/java/", "/src/"}
+    for _, pat in ipairs(patterns) do
+        local start_idx, end_idx = filepath:find(pat)
+        if end_idx then
+            package_path = filepath:sub(end_idx + 1)
+            break
+        end
+    end
+
+    if package_path ~= "" then
+        local package_name = package_path:gsub("/", ".")
         table.insert(lines, "package " .. package_name .. ";")
         table.insert(lines, "")
-      end
     end
     
     -- 2. Generate Class Skeleton

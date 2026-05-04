@@ -30,6 +30,6 @@ return {
         { "<S-h>", "<cmd>BufferLineCyclePrev<cr>", desc = "Prev Buffer" },
         { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
         { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick Buffer" },
-        { "<leader>bc", "<cmd>BufferLinePickClose<cr>", desc = "Pick Close Buffer" },
+        { "<leader>bc", "<cmd>bdelete<cr>", desc = "Close Buffer" },
     },
 }

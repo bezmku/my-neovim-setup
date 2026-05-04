@@ -22,6 +22,8 @@ return {
 		"css",
 		"vimdoc",
 		"sql",
+		"kotlin",
+		"dart",
 
 	    },
 

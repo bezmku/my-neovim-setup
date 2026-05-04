@@ -25,12 +25,29 @@ return {
     },
     keys = {
         { "<leader>ee", "<cmd>Neotree toggle<cr>", desc = "Toggle Explorer" },
+        { "<leader>ef", "<cmd>Neotree focus filesystem left<cr>", desc = "Focus Files" },
+        { "<leader>eb", "<cmd>Neotree focus buffers left<cr>", desc = "Focus Buffers" },
+        { "<leader>eg", "<cmd>Neotree focus git_status left<cr>", desc = "Focus Git" },
     },
     opts = {
         close_if_last_window = true,
         popup_border_style = "rounded",
         enable_git_status = true,
         enable_diagnostics = true,
+
+        source_selector = {
+            sources = {
+                { source = "filesystem", display_name = " 󰉓 Files " },
+                { source = "buffers", display_name = " 󰈙 Buffers " },
+                { source = "git_status", display_name = " 󰊢 Git " },
+            },
+            content_layout = "center",
+            tabs_layout = "equal",
+            show_separator_on_edge = true,
+            padding_left = 1,
+            padding_right = 1,
+        },
+
         default_component_configs = {
             indent = {
                 indent_size = 2,
@@ -48,8 +65,9 @@ return {
                 folder_closed = "",
                 folder_open = "",
                 folder_empty = "󰜌",
+                folder_empty_open = "󰷏",
                 default = "*",
-                highlight = "NeoTreeFileIcon"
+                highlight = "NeoTreeFileIcon",
             },
             modified = {
                 symbol = "●",
@@ -71,26 +89,120 @@ return {
                     unstaged  = "󰄱",
                     staged    = "",
                     conflict  = "",
-                }
+                },
             },
         },
+
+        window = {
+            width = 35,
+            auto_expand_width = false,
+            padding_left = 1,
+            padding_right = 1,
+            mappings = {
+                ["l"] = "open",
+                ["h"] = "close_node",
+                ["<S-l>"] = "next_source",
+                ["<S-h>"] = "prev_source",
+                ["d"] = "delete",
+                ["Z"] = function(state)
+                    local node = state.tree:get_node()
+                    local path = node:get_id()
+                    if path:match("%.zip$") then
+                        local dest = path:gsub("%.zip$", "")
+                        vim.fn.system(string.format("unzip -o %s -d %s", vim.fn.shellescape(path), vim.fn.shellescape(dest)))
+                        vim.notify("Unzipped: " .. dest, vim.log.levels.INFO)
+                        require("neo-tree.sources.manager").refresh(state.name)
+                    else
+                        vim.notify("Node is not a zip file", vim.log.levels.WARN)
+                    end
+                end,
+                ["<space>"] = "none",
+                ["o"] = function(state)
+                    local node = state.tree:get_node()
+                    if node.type == "directory" then
+                        require("neo-tree.ui.renderer").toggle_node(state)
+                    else
+                        require("neo-tree.ui.renderer").toggle_node(state)
+                    end
+                end,
+            },
+        },
+
         filesystem = {
             filtered_items = {
                 visible = true,
                 hide_dotfiles = false,
                 hide_gitignored = false,
+                hide_by_name = {
+                    "node_modules",
+                    ".cache",
+                    "dist",
+                },
+                never_show_by_pattern = {
+                    ".DS_Store",
+                    "thumbs.db",
+                },
             },
             follow_current_file = {
                 enabled = true,
+                leave_dirs_open = false,
             },
             use_libuv_file_watcher = true,
+            hijack_netrw_behavior = "open_default",
+            bind_to_cwd = false,
+            cwd_target = {
+                sidebar = "tab",
+                current = "window",
+            },
+            group_empty_dirs = true,
         },
-        window = {
-            width = 30,
-            mappings = {
-                ["l"] = "open",
-                ["h"] = "close_node",
+
+        buffers = {
+            follow_current_file = {
+                enabled = true,
+                leave_dirs_open = false,
+            },
+            group_empty_dirs = true,
+            show_unloaded = true,
+            window = {
+                position = "left",
+            },
+        },
+
+        git_status = {
+            follow_current_file = {
+                enabled = true,
+                leave_dirs_open = false,
+            },
+            group_empty_dirs = true,
+            window = {
+                position = "left",
+            },
+        },
+
+        event_handlers = {
+            {
+                event = "neo_tree_buffer_enter",
+                handler = function(_)
+                    vim.opt_local.signcolumn = "auto"
+                    vim.opt_local.cursorline = true
+                end,
             },
         },
     },
+    config = function(_, opts)
+        require("neo-tree").setup(opts)
+
+        vim.api.nvim_set_hl(0, "NeoTreeDirectoryName", { fg = "#89b4fa", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeDimText", { fg = "#585b70", italic = true })
+        vim.api.nvim_set_hl(0, "NeoTreeFileName", { fg = "#cdd6f4" })
+        vim.api.nvim_set_hl(0, "NeoTreeFileTitle", { fg = "#f38ba8", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeSourceName", { fg = "#a6adc8", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeTabActive", { fg = "#1e1e2e", bg = "#89b4fa", bold = true })
+        vim.api.nvim_set_hl(0, "NeoTreeTabInactive", { fg = "#a6adc8", bg = "#313244" })
+        vim.api.nvim_set_hl(0, "NeoTreeTabSeparatorActive", { fg = "#89b4fa", bg = "#89b4fa" })
+        vim.api.nvim_set_hl(0, "NeoTreeTabSeparatorInactive", { fg = "#313244", bg = "#313244" })
+        vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#1e1e2e" })
+        vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#1e1e2e" })
+    end,
 }

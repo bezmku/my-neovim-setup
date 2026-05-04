@@ -15,6 +15,7 @@ return {
             ensure_installed = {
                 "pyright",
                 "lua_ls",
+                "kotlin_language_server",
             },
         })
         require("mason-tool-installer").setup({
@@ -22,6 +23,7 @@ return {
                 "debugpy",
                 "black", -- Backup formatter if needed
                 "ruff",
+                "dart-debug-adapter",
             },
         })
         require("mason-tool-installer").setup({

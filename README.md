@@ -6,7 +6,9 @@ This is a personal Neovim setup designed to be a fast, modular, and powerful dev
 
 *   Plugin Management: Uses Lazy.nvim for efficient, asynchronous plugin handling.
 *   Python Powerhouse: A complete Python environment featuring Basedpyright for precise type checking and Ruff for extremely fast linting and formatting. It includes integrated testing, virtual environment management, and Jupyter-style interactive execution.
-*   Java Development: Full jdtls integration with automated formatting and specialized organization tools.
+*   Java & Jakarta EE: Full jdtls integration with automated formatting, specialized organization tools, and optimized support for Jakarta EE projects.
+*   Kotlin & Flutter: Comprehensive support for Kotlin development and a premium Flutter environment featuring Hot Reload, device management, and integrated Dart debugging.
+*   Project Scaffolding: Built-in commands to quickly bootstrap new projects for Spring Boot, Jakarta EE, and Flutter.
 *   Local AI Integration: Built-in support for CodeCompanion and OpenCode, configured to use local models via Ollama to keep your code private and avoid subscription limits.
 *   Debugging: Integrated debugging via DAP with custom UI layouts and color-coded consoles.
 *   Aesthetics: Uses the Tokyo Night theme with a customized statusline and streamlined UI components for a focused workspace.
@@ -31,6 +33,30 @@ This configuration turns Neovim into a full-scale Python IDE. All Python-specifi
 | <leader>pe | Evaluate Range | Send selection to Molten |
 | <leader>ph | Hide Output | Hide interactive execution results |
 
+### Java, Jakarta & Flutter
+Specialized workflows for JVM and Mobile development.
+
+| Shortcut | Action | Context |
+| :--- | :--- | :--- |
+| <leader>oi | Organize Imports | Java / Jakarta |
+| <leader>ev | Extract Variable | Java / Jakarta |
+| <leader>ec | Extract Constant | Java / Jakarta |
+| <leader>fr | Flutter Run | Flutter |
+| <leader>fh | Hot Reload | Flutter |
+| <leader>fR | Hot Restart | Flutter |
+| <leader>fd | Devices List | Flutter |
+| <leader>fem | Emulators List | Flutter |
+| <leader>fq | Quit App | Flutter |
+
+### Project Scaffolding
+Quickly bootstrap new projects with a single command.
+
+| Command | Action | Service / Tool |
+| :--- | :--- | :--- |
+| `:SpringInit` | Create Spring Boot Project | start.spring.io |
+| `:JakartaInit` | Create Jakarta EE Project | start.jakarta.ee |
+| `:FlutterInit` | Create Flutter Project | flutter create |
+
 ### AI Assistance
 Integrated AI workflows using local models.
 
@@ -45,7 +71,7 @@ Integrated AI workflows using local models.
 | <leader>oa | Agent Actions | OpenCode |
 
 ### Development & LSP
-Standard language server features for all supported languages.
+Standard language server features for all supported languages (Python, Java, Kotlin, Dart, C++, JS/TS).
 
 | Shortcut | Action |
 | :--- | :--- |
@@ -88,6 +114,6 @@ Tools for managing your editor layout and navigating files.
 
 1. Clone this repository into your `~/.config/nvim` directory.
 2. Open Neovim; Lazy.nvim will automatically handle the installation of all plugins.
-3. Mason will manage the installation of language servers and debuggers. It is configured to automatically pull Basedpyright, Ruff, and Debugpy.
+3. Mason will manage the installation of language servers and debuggers. It is configured to automatically pull Basedpyright, Ruff, Kotlin LS, and Dart debuggers.
 4. For AI features, you will need Ollama installed with your preferred models (qwen2.5-coder is recommended) pulled and running locally.
 5. For interactive Python features, ensure you have `pynvim` and `jupyter_client` installed in your global or base environment.

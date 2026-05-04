@@ -92,6 +92,8 @@ return {
         vim.lsp.config["clangd"] = { capabilities = capabilities }
         -- JS/TS
         vim.lsp.config["ts_ls"] = { capabilities = capabilities }
+        -- Kotlin
+        vim.lsp.config["kotlin_language_server"] = { capabilities = capabilities }
 
         -- 4. Explicitly Enable Servers
         vim.lsp.enable("basedpyright")
@@ -99,5 +101,6 @@ return {
         vim.lsp.enable("lua_ls")
         vim.lsp.enable("clangd")
         vim.lsp.enable("ts_ls")
+        vim.lsp.enable("kotlin_language_server")
     end,
 }
