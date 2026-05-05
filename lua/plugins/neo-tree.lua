@@ -62,11 +62,11 @@ return {
                 expander_highlight = "NeoTreeExpander",
             },
             icon = {
-                folder_closed = "",
-                folder_open = "",
+                folder_closed = "󰉓",
+                folder_open = "󱗗",
                 folder_empty = "󰜌",
                 folder_empty_open = "󰷏",
-                default = "*",
+                default = "󰈚",
                 highlight = "NeoTreeFileIcon",
             },
             modified = {
@@ -80,15 +80,15 @@ return {
             },
             git_status = {
                 symbols = {
-                    added     = "✚",
-                    modified  = "",
-                    deleted   = "✖",
+                    added     = "󰐕",
+                    modified  = "󰏫",
+                    deleted   = "󰍶",
                     renamed   = "󰁕",
-                    untracked = "",
-                    ignored   = "",
+                    untracked = "󰔓",
+                    ignored   = "󰛐",
                     unstaged  = "󰄱",
-                    staged    = "",
-                    conflict  = "",
+                    staged    = "󰄲",
+                    conflict  = "󰀦",
                 },
             },
         },
@@ -202,7 +202,9 @@ return {
         vim.api.nvim_set_hl(0, "NeoTreeTabInactive", { fg = "#a6adc8", bg = "#313244" })
         vim.api.nvim_set_hl(0, "NeoTreeTabSeparatorActive", { fg = "#89b4fa", bg = "#89b4fa" })
         vim.api.nvim_set_hl(0, "NeoTreeTabSeparatorInactive", { fg = "#313244", bg = "#313244" })
-        vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "#1e1e2e" })
-        vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "#1e1e2e" })
+        vim.api.nvim_set_hl(0, "NeoTreeNormal", { bg = "none" })
+        vim.api.nvim_set_hl(0, "NeoTreeNormalNC", { bg = "none" })
+        vim.api.nvim_set_hl(0, "NeoTreeWinSeparator", { fg = "#313244", bg = "none" })
+        vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#313244", bg = "none" })
     end,
 }

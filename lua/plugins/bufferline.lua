@@ -5,8 +5,9 @@ return {
     opts = {
         options = {
             mode = "buffers",
-            separator_style = "slant",
+            separator_style = "thick",
             always_show_bufferline = true,
+            show_buffer_icons = true,
             show_buffer_close_icons = true,
             show_close_icon = true,
             color_icons = true,
@@ -20,6 +21,8 @@ return {
                 local icon = level:match("error") and " " or " "
                 return " " .. icon .. count
             end,
+            tab_size = 20,
+            max_name_length = 30,
             indicator = {
                 icon = '▎',
                 style = 'icon',
@@ -31,5 +34,12 @@ return {
         { "<S-l>", "<cmd>BufferLineCycleNext<cr>", desc = "Next Buffer" },
         { "<leader>bp", "<cmd>BufferLinePick<cr>", desc = "Pick Buffer" },
         { "<leader>bc", "<cmd>bdelete<cr>", desc = "Close Buffer" },
+        { "<leader>bt", function()
+            if vim.opt.showtabline:get() == 2 then
+                vim.opt.showtabline = 0
+            else
+                vim.opt.showtabline = 2
+            end
+        end, desc = "Toggle Bufferline" },
     },
 }

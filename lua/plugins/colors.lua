@@ -22,6 +22,10 @@ local themes = {
     { name = "Nightfox",           colorscheme = "nightfox",          lualine = "nightfox"   },
     { name = "Carbonfox",          colorscheme = "carbonfox",         lualine = "carbonfox"  },
     { name = "Everforest",         colorscheme = "everforest",        lualine = "everforest" },
+    { name = "Cyberdream",         colorscheme = "cyberdream",        lualine = "cyberdream" },
+    { name = "Nordic",             colorscheme = "nordic",            lualine = "nordic"     },
+    { name = "Dracula",            colorscheme = "dracula",           lualine = "dracula"    },
+    { name = "Mellow",             colorscheme = "mellow",            lualine = "mellow"     },
 }
 
 -- ── Persistence ───────────────────────────────────────────────────────────────
@@ -42,6 +46,49 @@ end
 
 local current_index = load_index()
 
+local function fix_highlights()
+    -- Groups to make transparent
+    local groups = {
+        "Normal", "NormalNC", "SignColumn", "LineNr", "CursorLineNr",
+        "EndOfBuffer", "MsgArea", "Pmenu", "NormalFloat", "FloatBorder",
+        "TelescopeNormal", "TelescopeBorder", "TelescopePromptBorder",
+        "NeoTreeNormal", "NeoTreeNormalNC", "NeoTreeWinSeparator"
+    }
+    for _, group in ipairs(groups) do
+        vim.api.nvim_set_hl(0, group, { bg = "none" })
+    end
+
+    -- Subtle cursorline that works with transparency
+    local bg_color = vim.o.background == "dark" and "#2c2e34" or "#e1e2e7"
+    vim.api.nvim_set_hl(0, "CursorLine", { bg = bg_color })
+
+    -- ── Syntax Pop ───────────────────────────────────────────────────────────
+    -- Annotations (@Data, @Entity): Warm Yellow/Orange
+    vim.api.nvim_set_hl(0, "@attribute", { fg = "#e0af68", bold = true })
+    vim.api.nvim_set_hl(0, "@annotation", { fg = "#e0af68", bold = true })
+    
+    -- Methods: Vibrant Blue
+    vim.api.nvim_set_hl(0, "@method", { fg = "#7aa2f7", bold = true })
+    vim.api.nvim_set_hl(0, "@function.method", { fg = "#7aa2f7", bold = true })
+    
+    -- Variables & Fields: Soft Green
+    vim.api.nvim_set_hl(0, "@variable", { fg = "#9ece6a" })
+    vim.api.nvim_set_hl(0, "@variable.member", { fg = "#9ece6a" })
+    
+    -- Data Types (String, int, List): Bright Cyan
+    vim.api.nvim_set_hl(0, "@type", { fg = "#0db9d7", bold = true })
+    vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#0db9d7", bold = true })
+    
+    -- Access Modifiers (public, private): Magenta/Purple
+    vim.api.nvim_set_hl(0, "@keyword.modifier", { fg = "#bb9af7", italic = true })
+    
+    -- Structural Keywords: Bold White/Gray
+    vim.api.nvim_set_hl(0, "@keyword", { fg = "#c0caf5", bold = true })
+    
+    -- Imports: Distinct warm color
+    vim.api.nvim_set_hl(0, "@keyword.import", { fg = "#ff9e64", bold = true })
+end
+
 -- ── Apply ─────────────────────────────────────────────────────────────────────
 local function apply_theme(idx, silent)
     local t = themes[idx]
@@ -50,10 +97,7 @@ local function apply_theme(idx, silent)
         vim.notify("󰎑 Theme error: " .. err, vim.log.levels.WARN)
         return
     end
-    vim.api.nvim_set_hl(0, "Normal",   { bg = "none" })
-    vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
-    local ll_ok, lualine = pcall(require, "lualine")
-    if ll_ok then lualine.setup({ options = { theme = t.lualine } }) end
+    fix_highlights()
     save_index(idx)
     if not silent then
         vim.notify("󰎑  " .. t.name, vim.log.levels.INFO)
@@ -75,13 +119,11 @@ local function open_theme_picker()
 
     local prev_index = current_index  -- remember so Esc can restore it
 
-    -- Quick silent preview while browsing (no save, no notify)
     local function preview_selection()
         local sel = action_state.get_selected_entry()
         if not sel then return end
         pcall(vim.cmd.colorscheme, sel.value.colorscheme)
-        vim.api.nvim_set_hl(0, "Normal",   { bg = "none" })
-        vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+        fix_highlights()
     end
 
     pickers.new({}, {
@@ -115,8 +157,7 @@ local function open_theme_picker()
                     local sel = action_state.get_selected_entry()
                     if not sel then return end
                     pcall(vim.cmd.colorscheme, sel.value.colorscheme)
-                    vim.api.nvim_set_hl(0, "Normal",   { bg = "none" })
-                    vim.api.nvim_set_hl(0, "NormalNC", { bg = "none" })
+                    fix_highlights()
                 end)
             end
 
@@ -192,4 +233,8 @@ return {
     { "rebelot/kanagawa.nvim",    lazy = true },
     { "EdenEast/nightfox.nvim",   lazy = true },
     { "sainnhe/everforest",       lazy = true },
+    { "scottmckendry/cyberdream.nvim", lazy = true },
+    { "AlexvZyl/nordic.nvim",     lazy = true },
+    { "Mofiqul/dracula.nvim",     lazy = true },
+    { "kvrohit/mellow.nvim",      lazy = true },
 }

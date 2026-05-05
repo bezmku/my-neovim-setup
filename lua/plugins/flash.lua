@@ -3,9 +3,19 @@ return {
   event = "VeryLazy",
   ---@type Flash.Config
   opts = {
+    search = {
+      multi_window = true, -- Jump across any open window
+      wrap = true,         -- Wrap around the buffer
+    },
+    jump = {
+      autojump = true,     -- Automatically jump when only one match remains
+    },
     modes = {
+      search = {
+        enabled = true,    -- Enables flash labels during regular / search
+      },
       char = {
-        enabled = false -- Disables flash overriding the standard f, F, t, T keys to keep them native
+        enabled = false    -- Keep standard f/F/t/T behavior
       }
     }
   },
