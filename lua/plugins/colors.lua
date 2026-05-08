@@ -26,6 +26,16 @@ local themes = {
     { name = "Nordic",             colorscheme = "nordic",            lualine = "nordic"     },
     { name = "Dracula",            colorscheme = "dracula",           lualine = "dracula"    },
     { name = "Mellow",             colorscheme = "mellow",            lualine = "mellow"     },
+    { name = "OneDark",            colorscheme = "onedark",           lualine = "onedark"    },
+    { name = "Nightfly",           colorscheme = "nightfly",          lualine = "nightfly"   },
+    { name = "Moonfly",            colorscheme = "moonfly",           lualine = "moonfly"    },
+    { name = "Ayu Dark",           colorscheme = "ayu-dark",          lualine = "ayu_dark"   },
+    { name = "Monokai Pro",        colorscheme = "monokai-pro",       lualine = "monokai-pro"},
+    { name = "Edge",               colorscheme = "edge",              lualine = "edge"       },
+    { name = "Sonokai",            colorscheme = "sonokai",           lualine = "sonokai"    },
+    { name = "GitHub Dark",        colorscheme = "github_dark",       lualine = "github_dark"},
+    { name = "Material",           colorscheme = "material",          lualine = "material"   },
+    { name = "Oxocarbon",          colorscheme = "oxocarbon",         lualine = "oxocarbon"  },
 }
 
 -- ── Persistence ───────────────────────────────────────────────────────────────
@@ -237,4 +247,14 @@ return {
     { "AlexvZyl/nordic.nvim",     lazy = true },
     { "Mofiqul/dracula.nvim",     lazy = true },
     { "kvrohit/mellow.nvim",      lazy = true },
+    { "navarasu/onedark.nvim",    lazy = true },
+    { "bluz71/vim-nightfly-colors", lazy = true },
+    { "bluz71/vim-moonfly-colors", lazy = true },
+    { "Shatur/neovim-ayu",        lazy = true },
+    { "loctvl842/monokai-pro.nvim", lazy = true },
+    { "sainnhe/edge",             lazy = true },
+    { "sainnhe/sonokai",          lazy = true },
+    { "projekt0n/github-nvim-theme", lazy = true },
+    { "marko-cerovac/material.nvim", lazy = true },
+    { "nyoom-engineering/oxocarbon.nvim", lazy = true },
 }
