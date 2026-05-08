@@ -13,7 +13,7 @@ return {
                     blend = 10,
                 },
                 filetype = {
-                    java = "echo -e '\\033[1;34m[System]\\033[0m Compiling and Running Java...' && root=$(git rev-parse --show-toplevel 2>/dev/null || pwd) && cd $root && javac -d . -sourcepath src $file && java $(echo $file | sed \"s|$root/src/||\" | sed \"s|\\.java$||\" | tr '/' '.')",
+                    java = "echo -e '\\033[1;34m[System]\\033[0m Compiling and Running Java...' && root=$(git rev-parse --show-toplevel 2>/dev/null || pwd) && cd $root && javac -d bin -sourcepath src $file && java -cp 'bin:lib/*' $(echo $file | sed \"s|$root/src/||\" | sed \"s|\\.java$||\" | tr '/' '.')",
                     python = "echo -e '\\033[1;34m[System]\\033[0m Running Python...' && python3 $file",
                     cpp = "echo -e '\\033[1;34m[System]\\033[0m Compiling and Running C++...' && cd $dir && g++ $fileName -o $fileNameWithoutExt && ./$fileNameWithoutExt",
                     javascript = "echo -e '\\033[1;34m[System]\\033[0m Running JavaScript...' && node $file",
