@@ -5,9 +5,9 @@ vim.keymap.set("n", "<leader>cd", vim.cmd.Ex)
 vim.keymap.set("i", "jj", "<Esc>", { desc = "Exit insert mode with jj" })
 vim.keymap.set("t", "jj", [[<C-\><C-n>]], { desc = "Exit terminal mode with jj" })
 
--- Manual Format Shortcut 
+-- Manual Format Shortcut
 vim.keymap.set("n", "<leader>f", function()
-    vim.lsp.buf.format({ async = true })
+    require("conform").format({ async = true, lsp_fallback = true })
 end, { desc = "Format current buffer" })
 
 -- Window Navigation (Switch between splits easily)
@@ -73,3 +73,36 @@ vim.keymap.set("n", "<leader>M", function()
         print("No minimized split to restore")
     end
 end, { desc = "Restore minimized split" })
+
+
+-- Custom Undo Tree Toggle
+vim.keymap.set("n", "<leader>u", function()
+    require("config.undotree").toggle()
+end, { desc = "Toggle Custom Undo Tree" })
+
+-- Initialize Maven Project
+vim.keymap.set("n", "<leader>mi", function()
+    vim.ui.input({ prompt = "Group ID (e.g. com.example): ", default = "com.example" }, function(group_id)
+        if not group_id or group_id == "" then return end
+        vim.ui.input({ prompt = "Artifact ID (e.g. my-app): ", default = "my-app" }, function(artifact_id)
+            if not artifact_id or artifact_id == "" then return end
+            
+            local cmd = string.format(
+                "mvn archetype:generate -DgroupId=%s -DartifactId=%s -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false",
+                group_id, artifact_id
+            )
+            
+            vim.notify("Initializing Maven project...", vim.log.levels.INFO)
+            
+            vim.fn.jobstart(cmd, {
+                on_exit = function(_, code)
+                    if code == 0 then
+                        vim.notify("Maven project '" .. artifact_id .. "' initialized successfully!", vim.log.levels.INFO)
+                    else
+                        vim.notify("Failed to initialize Maven project. Check if Maven is installed.", vim.log.levels.ERROR)
+                    end
+                end,
+            })
+        end)
+    end)
+end, { desc = "Initialize Maven Project" })

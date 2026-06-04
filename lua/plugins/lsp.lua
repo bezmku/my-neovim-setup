@@ -36,19 +36,12 @@ return {
                     return ":IncRename " .. vim.fn.expand("<cword>")
                 end, { expr = true, buffer = buf, desc = "LSP: Rename (Live)" })
                 
-                map("n", "<F3>", function() vim.lsp.buf.format({ async = true }) end, "LSP: Format")
+                -- Format on save is now handled by conform.nvim
+                -- The manual format key <F3> is now also managed by conform.nvim (via fallback if needed, or we can map it here)
+                -- We delegate <F3> to conform.format()
+                map("n", "<F3>", function() require("conform").format({ async = true, lsp_fallback = true }) end, "LSP: Format (Conform)")
                 map("n", "<F4>", vim.lsp.buf.code_action, "LSP: Code Action")
                 map("n", "gl", vim.diagnostic.open_float, "LSP: Diagnostics")
-
-                -- Auto-format on save
-                if client and client.supports_method("textDocument/formatting") then
-                    vim.api.nvim_create_autocmd("BufWritePre", {
-                        buffer = buf,
-                        callback = function()
-                            vim.lsp.buf.format({ bufnr = buf, id = client.id })
-                        end,
-                    })
-                end
             end,
         })
 
@@ -61,6 +54,7 @@ return {
         vim.lsp.config["basedpyright"] = {
             cmd = { vim.fn.stdpath("data") .. "/mason/bin/basedpyright-langserver", "--stdio" },
             root_dir = function(fname)
+                if not fname or type(fname) ~= "string" or fname == "" then return nil end
                 return root_pattern(fname) or util.path.dirname(fname)
             end,
             capabilities = capabilities,
@@ -78,6 +72,7 @@ return {
         vim.lsp.config["ruff"] = {
             cmd = { vim.fn.stdpath("data") .. "/mason/bin/ruff", "server" },
             root_dir = function(fname)
+                if not fname or type(fname) ~= "string" or fname == "" then return nil end
                 return root_pattern(fname) or util.path.dirname(fname)
             end,
             capabilities = capabilities,

@@ -74,29 +74,29 @@ local function fix_highlights()
 
     -- ── Syntax Pop ───────────────────────────────────────────────────────────
     -- Annotations (@Data, @Entity): Warm Yellow/Orange
-    vim.api.nvim_set_hl(0, "@attribute", { fg = "#e0af68", bold = true })
-    vim.api.nvim_set_hl(0, "@annotation", { fg = "#e0af68", bold = true })
+    -- vim.api.nvim_set_hl(0, "@attribute", { fg = "#e0af68", bold = true })
+    -- vim.api.nvim_set_hl(0, "@annotation", { fg = "#e0af68", bold = true })
     
     -- Methods: Vibrant Blue
-    vim.api.nvim_set_hl(0, "@method", { fg = "#7aa2f7", bold = true })
-    vim.api.nvim_set_hl(0, "@function.method", { fg = "#7aa2f7", bold = true })
+    -- vim.api.nvim_set_hl(0, "@method", { fg = "#7aa2f7", bold = true })
+    -- vim.api.nvim_set_hl(0, "@function.method", { fg = "#7aa2f7", bold = true })
     
     -- Variables & Fields: Soft Green
-    vim.api.nvim_set_hl(0, "@variable", { fg = "#9ece6a" })
-    vim.api.nvim_set_hl(0, "@variable.member", { fg = "#9ece6a" })
+    -- vim.api.nvim_set_hl(0, "@variable", { fg = "#9ece6a" })
+    -- vim.api.nvim_set_hl(0, "@variable.member", { fg = "#9ece6a" })
     
     -- Data Types (String, int, List): Bright Cyan
-    vim.api.nvim_set_hl(0, "@type", { fg = "#0db9d7", bold = true })
-    vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#0db9d7", bold = true })
+    -- vim.api.nvim_set_hl(0, "@type", { fg = "#0db9d7", bold = true })
+    -- vim.api.nvim_set_hl(0, "@type.builtin", { fg = "#0db9d7", bold = true })
     
     -- Access Modifiers (public, private): Magenta/Purple
-    vim.api.nvim_set_hl(0, "@keyword.modifier", { fg = "#bb9af7", italic = true })
+    -- vim.api.nvim_set_hl(0, "@keyword.modifier", { fg = "#bb9af7", italic = true })
     
     -- Structural Keywords: Bold White/Gray
-    vim.api.nvim_set_hl(0, "@keyword", { fg = "#c0caf5", bold = true })
+    -- vim.api.nvim_set_hl(0, "@keyword", { fg = "#c0caf5", bold = true })
     
     -- Imports: Distinct warm color
-    vim.api.nvim_set_hl(0, "@keyword.import", { fg = "#ff9e64", bold = true })
+    -- vim.api.nvim_set_hl(0, "@keyword.import", { fg = "#ff9e64", bold = true })
 end
 
 -- ── Apply ─────────────────────────────────────────────────────────────────────
